@@ -1,379 +1,464 @@
+#include<stdio.h>
 #include<GL/glut.h>
-#include<windows.h>
 
-void display(void);
+void ice();
+void display1();
+void display2();
+void display3();
+void ship();
+void water();
 
-int flag=0;
-float pos,y=0;
+GLint a=0,b=0,c=0,d=0,e=0,f=0,g=500,h=600,x=100,i=0;
+GLfloat theta=0.0;
 
-void init()
+void update(int value)
 {
-	glClearColor(0.0,0.0,0.0,0.0);
-	glColor3f(1.0,0.0,0.0);
-	glLineWidth(3.0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0,1024,0,768);
-
+	a+=20.0;
+	glutPostRedisplay();
+	glutTimerFunc(300,update,0);
 }
 
-void bitmap_output(int x,int y,char *string,void * font)
+void display()
 {
-	int len,i;
-	glRasterPos2f(x,y);
-	len=(int)strlen(string);
-	for(i=0;i<len;i++)
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	display1();
+
+	if(a>950)
 	{
-		glutBitmapCharacter(font,string[i]);
+		b+=20;
+		display2();
 	}
+	if(b>950 )
+	{
+		c+=10;
+		display3();
+
+	}
+
+	glFlush();
 }
 
-void myMouse1(int btn,int state,int x,int y)
+
+void display1()
 {
-	if(btn==GLUT_LEFT_BUTTON&&state==GLUT_DOWN)
+	glPushMatrix();
 
-		flag=1;
-		glutPostRedisplay();
-
+	glTranslated(a,75,0.0);
+	ship();
+	glPopMatrix();
+	water();
 }
 
-
-
-
-
-
-
-void iceberg()
-{
-
-	glColor3f(0.81,0.81,0.81);
-	glBegin(GL_POLYGON);
-	glVertex2i(870,450);
-	glVertex2i(970,410);
-	glVertex2i(990,360);
-	glVertex2i(1010,310);
-	glVertex2i(1005,270);
-	glVertex2i(1000,230);
-	glVertex2i(1010,210);
-	glVertex2i(980,170);
-	glVertex2i(970,145);
-	glVertex2i(950,130);
-	glVertex2i(920,120);
-	glVertex2i(905,105);
-	glVertex2i(890,110);
-	glVertex2i(795,115);
-	glVertex2i(750,200);
-	glVertex2i(730,300);
-	glVertex2i(745,350);
-	glVertex2i(758,370);
-	glVertex2i(870,400);
-
-	glEnd();
-
-}
-
-
-void ship(int x,int y)
+void display2()
 {
 
-
-			/*base*/
-
-		glBegin(GL_POLYGON);
-		glColor3f(0.30f,0.06f,0.42f);
-		glVertex2f(20+x,238+y);
-		glColor3f(0.30f,0.06f,0.42f);
-		glVertex2f(20+x,220+y);
-				glColor3f(.0f,0.0f,0.0f);
-		glVertex2f(82+x,140+y);
-					glColor3f(0.0f,0.0f,0.0f);
-		glVertex2f(438+x,84+y);
-
-			glColor3f(0.32f,0.06f,0.42f);
-		glVertex2f(584+x,196+y);
-			glColor3f(0.30f,0.06f,0.42f);
-		glVertex2f(600+x,220+y);
-		glEnd();
-
-	/*p1*/
-
-	glColor3f(0.70,0.0,0.0);
-	glBegin(GL_POLYGON);
-
-		glVertex2f(70+x,236+y);
-		glVertex2f(70+x,256+y);
-		glVertex2f(478+x,262+y);
-		glVertex2f(478+x,222+y);
-		glVertex2f(70+x,238+y);
-		glEnd();
-
-
-
-
-/*p2*/
-		glColor3f(1.0,1.0,1.0);
-	glBegin(GL_POLYGON);
-	//	glBegin(GL_LINE_LOOP);
-		glVertex2f(90+x,258+y);
-		glVertex2f(90+x,280+y);
-		glVertex2f(466+x,298+y);
-		glVertex2f(466+x,262+y);
-		//glVertex2f(90+x,258+y);
-		glEnd();
-
-
-	glColor3f(1.0,1.0,1.0);
-	glBegin(GL_LINE_LOOP);
-
-		glVertex2f(90+x,258+y);
-		glVertex2f(90+x,280+y);
-		glVertex2f(466+x,298+y);
-		glVertex2f(466+x,262+y);
-		glVertex2f(90+x,258+y);
-		glEnd();
-
-
-
-/*p3*/
-
-		glColor3f(0.30,0.30,0.30);
-	glBegin(GL_POLYGON);
-
-		glVertex2f(102+x,302+y);
-		glVertex2f(102+x,280+y);
-		glVertex2f(442+x,298+y);
-		glVertex2f(442+x,330+y);
-		glVertex2f(102+x,302+y);
-
-	glEnd();
-
-
-
-
-
-
-
-/*p4*/
-	glColor3f(1.0,0.50,0.00);
-	glBegin(GL_POLYGON);
-
-		glVertex2f(158+x,304+y);
-		glVertex2f(158+x,388+y);
-		glColor3f(0.3,0.3,0.0);
-		glVertex2f(188+x,388+y);
-		glVertex2f(188+x,310+y);
-
-	glEnd();
-
-
-
-
-glBegin(GL_POLYGON);
-	glColor3f(0.4,0.4,0.4);
-		glVertex2f(442+x,328+y);
-		glVertex2f(442+x,298+y);
-		glVertex2f(494+x,294+y);
-		glVertex2f(494+x,324+y);
-		//glVertex2f(318+x,322+y);
-		glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glColor3f(0.80,0.80,0.80);
-		glVertex2f(466+x,298+y);
-		glVertex2f(466+x,262+y);
-		glVertex2f(508+x,256+y);
-		glVertex2f(508+x,290+y);
-		//glVertex2f(318+x,322+y);
-		glEnd();
-
-	glBegin(GL_POLYGON);
-	glColor3f(0.50,0.0,0.0);
-		glVertex2f(478+x,262+y);
-		glVertex2f(478+x,222+y);
-		glVertex2f(514+x,220+y);
-		glVertex2f(514+x,254+y);
-		//glVertex2f(318+x,322+y);
-		glEnd();
-
-
-	glColor3f(1.0,0.50,0.0);
-		glBegin(GL_POLYGON);
-
-		glVertex2f(224+x,312+y);
-		glVertex2f(224+x,396+y);
-		glColor3f(0.3,0.3,0.0);
-		glVertex2f(254+x,396+y);
-		glVertex2f(254+x,315+y);
-	glEnd();
-
-	glColor3f(1.0,0.50,0.0);
-		glBegin(GL_POLYGON);
-//	glColor3f(0.5,0.5,0.2);
-		glVertex2f(318+x,322+y);
-//		glColor3f(0.3,0.1,0.0);
-		glVertex2f(318+x,406+y);
-			glColor3f(0.5,0.5,0.2);
-		glVertex2f(358+x,406+y);
-//		glColor3f(0.5,0.2,0.0);
-		glVertex2f(358+x,320+y);
-	//	glColor3f(0.3,0.3,0.0);
-
-		glEnd();
-	//}
+	glClear(GL_COLOR_BUFFER_BIT);
+	//ice();
+	glPushMatrix();
+	glTranslated(b,75,0.0);
+	ship();
+	glPopMatrix();
+	water();
 }
-void water1()
+
+void display3()
 {
-		glBegin(GL_POLYGON);
-		glColor3f(0.0,0.0,1.0);
-    		glVertex2f(0,160);
-		glVertex2f(80,160);
-
-		glVertex2f(480,100);
-		glVertex2f(1024,100);
-		glVertex2f(1024,0);
-	glVertex2f(0,0);
-	glEnd();
+	glClear(GL_COLOR_BUFFER_BIT);
+	ice();
+	x-=5;
+	glPushMatrix();
+	glTranslated(c,x,0.0);
+	glRotated(-12,0,0,1);
+	ship();
+	glPopMatrix();
+	water();
 
 }
 
+/* DRAW WATER */
 void water()
 {
-		glBegin(GL_POLYGON);
-		glColor3f(0.0,0.0,1.0);
-    //		glVertex2f(0,160);
-		glVertex2f(80,160);
-
-	//	glVertex2f(508,160);
-		glVertex2f(1024,160);
-		glVertex2f(1024,100);
-	glVertex2f(480,100);
-glVertex2f(80,160);
-	glEnd();
-
-}
-
-void display2(void)
-{
-
-	glClear(GL_COLOR_BUFFER_BIT);
-
-
-if(pos<210)
-pos+=0.1;
-
-if((600+pos)>800)
-{
-
-	if(y>-300)
-   y-=0.1;
-
-}
-
-
-   //glFlush();
-	water();
-	ship(pos,y);
-     iceberg();
-	 water1();
-
-glutPostRedisplay();
-	  glFlush();
-
-
-        glutSwapBuffers();
-}
-void display1(void)
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_LINE_LOOP);
-	glColor3f(1,1,1);
-	glVertex2f(30,30);
-	glVertex2f(994,30);
-	glVertex2f(994,738);
-	glVertex2f(30,738);
-	glEnd();
-	glColor3f(1,1,1);
-	bitmap_output(128,630,"SOME COLLEGE OF ENGINEERING",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,1,1);
-	bitmap_output(138,590,"DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,1);
-	bitmap_output(350,530,"A Mini Project On",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(0.5,0.8,0);
-	bitmap_output(250,480,"Ship and Iceberg Collision",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,1);
-	bitmap_output(100,420,"By",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,0);
-	bitmap_output(100,370,"Name USN",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,0);
-	bitmap_output(100,330,"Name USN",GLUT_BITMAP_TIMES_ROMAN_24);
-
-	glColor3f(1,0,1);
-	bitmap_output(350,240,"Guides",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,0);
-	bitmap_output(120,200,"Name Desg.",GLUT_BITMAP_TIMES_ROMAN_24);
-	glColor3f(1,0,0);
-	bitmap_output(620,200,"Name Desg.",GLUT_BITMAP_TIMES_ROMAN_24);
-
+	glColor3f(0.0,0.5,1.0);
 	glBegin(GL_POLYGON);
-	glColor3f(1,1,1);
-	glVertex2f(557,110);
-	glVertex2f(557,80);
-	glVertex2f(627,80);
-	glVertex2f(627,110);
+		glVertex2f(0,0);
+		glVertex2f(1000,0);
+		glVertex2f(1000,100);
+		glVertex2f(0,100);
 	glEnd();
-	glFlush();
-	glColor3f(0,0,0);
-	bitmap_output(567,90,"Next",GLUT_BITMAP_TIMES_ROMAN_24);
+}
+
+/* TO DRAW SHIP */
+void ship()
+{
+
+	glScaled(20,20,0);
+	glColor3f(0.5,0.5,0.5);
+	//grey middle rectangle 2
+	glBegin(GL_POLYGON);
+		glVertex2f(3.5,5.5);
+		glVertex2f(3.5,8.5);
+		glVertex2f(19.5,8.5);
+		glVertex2f(19.5,5.5);
 	glEnd();
-	glFlush();
-	glutSwapBuffers();
+	glColor3f(0.0,0.0,0.6);
+	//black bottom of ship
+	glBegin(GL_POLYGON);
+		glVertex2f(1,5.5);
+		glVertex2f(4,1);
+		glVertex2f(19,1);
+		glVertex2f(21.5,5.5);
+	glEnd();
+	glColor3f(0.7,0.4,0.2);
+	//vertical brown pole at left
+	glBegin(GL_POLYGON);
+		glVertex2f(4,5.5);
+		glVertex2f(4,8);
+		glVertex2f(5,8);
+		glVertex2f(5,5.5);
+	glEnd();
+	glColor3f(0.9,0.9,0.9);
+	//horizontal white 1
+	glBegin(GL_POLYGON);
+		glVertex2f(7,7.5);
+		glVertex2f(7,8);
+		glVertex2f(10,8);
+		glVertex2f(10,7.5);
+	glEnd();
+	//horizontal white 2
+	glBegin(GL_POLYGON);
+		glVertex2f(11.5,7.5);
+		glVertex2f(11.5,8);
+		glVertex2f(15,8);
+		glVertex2f(15,7.5);
+	glEnd();
+	//horizontal white 3
+	glBegin(GL_POLYGON);
+		glVertex2f(16,7.5);
+		glVertex2f(16,8);
+		glVertex2f(19,8);
+		glVertex2f(19,7.5);
+	glEnd();
 
+	glColor3f(0.5,0.5,0.5);
+	//top grey rectangle 1
+	glBegin(GL_POLYGON);
+		glVertex2f(4.5,8.5);
+		glVertex2f(4.5,10);
+		glVertex2f(18.5,10);
+		glVertex2f(18.5,8.5);
+	glEnd();
+
+	glColor3f(0.0,0.0,0.6);
+	//black vertical line 1
+	glBegin(GL_POLYGON);
+		glVertex2f(5.5,10);
+		glVertex2f(5.5,12.9);
+		glVertex2f(7,12.9);
+		glVertex2f(7,10);
+	glEnd();
+
+	glColor3f(0.9,0.5,0.2);
+	//top brown piece 1
+	glBegin(GL_POLYGON);
+		glVertex2f(5.5,12.9);
+		glVertex2f(5.5,13.5);
+		glVertex2f(7,13.5);
+		glVertex2f(7,12.9);
+	glEnd();
+
+	glColor3f(0.0,0.0,0.6);
+	//black vertical line 2
+	glBegin(GL_POLYGON);
+		glVertex2f(8.5,10);
+		glVertex2f(8.5,12.9);
+		glVertex2f(10,12.9);
+		glVertex2f(10,10);
+	glEnd();
+	glColor3f(0.9,0.5,0.2);
+	//top brown piece 2
+	glBegin(GL_POLYGON);
+		glVertex2f(8.5,12.9);
+		glVertex2f(8.5,13.5);
+		glVertex2f(10,13.5);
+		glVertex2f(10,12.9);
+	glEnd();
+	glColor3f(0.0,0.0,0.6);
+	//black vertical line 3
+	glBegin(GL_POLYGON);
+		glVertex2f(11.5,10);
+		glVertex2f(11.5,12.9);
+		glVertex2f(13,12.9);
+		glVertex2f(13,10);
+	glEnd();
+
+	glColor3f(0.9,0.5,0.2);
+	//top brown piece 3
+	glBegin(GL_POLYGON);
+		glVertex2f(11.5,12.9);
+		glVertex2f(11.5,13.5);
+		glVertex2f(13,13.5);
+		glVertex2f(13,12.9);
+	glEnd();
+	glColor3f(0.0,0.0,0.6);
+	//black vertical line 4
+	glBegin(GL_POLYGON);
+		glVertex2f(14.5,10);
+		glVertex2f(14.5,12.9);
+		glVertex2f(16,12.9);
+		glVertex2f(16,10);
+	glEnd();
+	glColor3f(0.9,0.5,0.2);
+	//top brown piece 4
+	glBegin(GL_POLYGON);
+		glVertex2f(14.5,12.9);
+		glVertex2f(14.5,13.5);
+		glVertex2f(16,13.5);
+		glVertex2f(16,12.9);
+	glEnd();
+	glColor3f(0.0,0.0,1.0);
+	//bottom up line 1
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(1.5,5.5);
+		glVertex2f(1.5,6.5);
+		glVertex2f(2,6.2);
+		glVertex2f(3,6.2);
+		glVertex2f(3.5,6.5);
+		glVertex2f(3.5,5.5);
+	glEnd();
+	//bottom up line 2
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(3.5,5.5);
+		glVertex2f(3.5,6.5);
+		glVertex2f(4,6.2);
+		glVertex2f(5,6.2);
+		glVertex2f(5.5,6.5);
+		glVertex2f(5.5,5.5);
+	glEnd();
+//bottom up line 3
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(5.5,5.5);
+		glVertex2f(5.5,6.5);
+		glVertex2f(6,6.2);
+		glVertex2f(7,6.2);
+		glVertex2f(7.5,6.5);
+		glVertex2f(7.5,5.5);
+	glEnd();
+//bottom up line 4
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(7.5,5.5);
+		glVertex2f(7.5,6.5);
+		glVertex2f(8,6.2);
+		glVertex2f(9,6.2);
+		glVertex2f(9.5,6.5);
+		glVertex2f(9.5,5.5);
+	glEnd();
+	//bottom up line 5
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(9.5,5.5);
+		glVertex2f(9.5,6.5);
+		glVertex2f(10,6.2);
+		glVertex2f(11,6.2);
+		glVertex2f(11.5,6.5);
+		glVertex2f(11.5,5.5);
+	glEnd();
+	//bottom up line 6
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(11.5,5.5);
+		glVertex2f(11.5,6.5);
+		glVertex2f(12,6.2);
+		glVertex2f(13,6.2);
+		glVertex2f(13.5,6.5);
+		glVertex2f(13.5,5.5);
+	glEnd();
+	//bottom up line 7
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(13.5,5.5);
+		glVertex2f(13.5,6.5);
+		glVertex2f(14,6.2);
+		glVertex2f(15,6.2);
+		glVertex2f(15.5,6.5);
+		glVertex2f(15.5,5.5);
+	glEnd();
+	//bottom up line 8
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(15.5,5.5);
+		glVertex2f(15.5,6.5);
+		glVertex2f(16,6.2);
+		glVertex2f(17,6.2);
+		glVertex2f(17.5,6.5);
+		glVertex2f(17.5,5.5);
+	glEnd();
+	//bottom up line 9
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(17.5,5.5);
+		glVertex2f(17.5,6.5);
+		glVertex2f(18,6.2);
+		glVertex2f(19,6.2);
+		glVertex2f(19.5,6.5);
+		glVertex2f(19.5,5.5);
+	glEnd();
+	//bottom up line 10
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(19.5,5.5);
+		glVertex2f(19.5,6.5);
+		glVertex2f(20,6.2);
+		glVertex2f(20.5,6.2);
+		glVertex2f(21,6.5);
+		glVertex2f(21,5.5);
+	glEnd();
+
+	glColor3f(1.0,1.0,1.0);
+
+	//square line 1
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(4.5,3.5);
+		glVertex2f(4.5,4.5);
+		glVertex2f(5.5,4.5);
+		glVertex2f(5.5,3.5);
+	glEnd();
+	//square line 2
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(7,3.5);
+		glVertex2f(7,4.5);
+		glVertex2f(8,4.5);
+		glVertex2f(8,3.5);
+	glEnd();
+	//square line 3
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(9.5,3.5);
+		glVertex2f(9.5,4.5);
+		glVertex2f(10.5,4.5);
+		glVertex2f(10.5,3.5);
+	glEnd();
+	//square line 4
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(12,3.5);
+		glVertex2f(12,4.5);
+		glVertex2f(13,4.5);
+		glVertex2f(13,3.5);
+	glEnd();
+	//square line 5
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(14.5,3.5);
+		glVertex2f(14.5,4.5);
+		glVertex2f(15.5,4.5);
+		glVertex2f(15.5,3.5);
+	glEnd();
+	//square line 6
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(17,3.5);
+		glVertex2f(17,4.5);
+		glVertex2f(18,4.5);
+		glVertex2f(18,3.5);
+	glEnd();
+
+	glColor3f(0.0,0.0,1.0);
+	//top black line 1
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(5,10);
+		glVertex2f(5,11);
+		glVertex2f(5.5,10.8);
+		glVertex2f(6.5,10.8);
+		glVertex2f(7,11);
+		glVertex2f(7,10);
+	glEnd();
+	//top black line 2
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(7,10);
+		glVertex2f(7,11);
+		glVertex2f(7.5,10.8);
+		glVertex2f(8.5,10.8);
+		glVertex2f(9,11);
+		glVertex2f(9,10);
+	glEnd();
+	//top black line 3
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(9,10);
+		glVertex2f(9,11);
+		glVertex2f(9.5,10.8);
+		glVertex2f(10.5,10.8);
+		glVertex2f(11,11);
+		glVertex2f(11,10);
+	glEnd();
+	//top black line 4
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(11,10);
+		glVertex2f(11,11);
+		glVertex2f(11.5,10.8);
+		glVertex2f(12.5,10.8);
+		glVertex2f(13,11);
+		glVertex2f(13,10);
+	glEnd();
+	//top black line 5
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(13,10);
+		glVertex2f(13,11);
+		glVertex2f(13.5,10.8);
+		glVertex2f(14.5,10.8);
+		glVertex2f(15,11);
+		glVertex2f(15,10);
+	glEnd();
+	//top black line 6
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(15,10);
+		glVertex2f(15,11);
+		glVertex2f(15.5,10.8);
+		glVertex2f(16.5,10.8);
+		glVertex2f(17,11);
+		glVertex2f(17,10);
+	glEnd();
+}
+
+/* TO DRAW ICEBERG */
+void ice()
+{
+	glPushMatrix();
+	glTranslated(300,50,0.0);
+	glScaled(10,10,0);
+	glColor3f(1.0,1.0,1.0);
+	glBegin(GL_POLYGON);
+	//glBegin(GL_LINE_LOOP);
+		glVertex2f(7.5,2.5);
+		glVertex2f(8,3);
+		glVertex2f(8.25,3.5);
+		glVertex2f(11.5,18.5);
+		glVertex2f(12,19);
+		glVertex2f(12.5,19.5);
+		glVertex2f(15,19.5);
+		glVertex2f(15.5,19.5);
+		glVertex2f(17.5,18.5);
+		glVertex2f(18.5,3.5);
+		glVertex2f(19,3);
+		glVertex2f(19.5,2.5);
+	glEnd();
+	glPopMatrix();
 }
 
 
 
-
-
-void myKeyboardFunc( unsigned char key, int x, int y )
-{
-
-
-	if(key==13)
-		flag=1;
-		//break;
-		display();
-
-
-
-
+void myinit()
+{	glClearColor( 0, 0, 0, 0);
+	//glClearColor(1.0f,1.0f,1.0f,1.0f);//specify clear values for color buffers
+	glColor3f(1.0,0.0,0.0);//specifies colors(RGB)
+	glPointSize(1.0);//specifies diameter of point
+	glMatrixMode(GL_PROJECTION);//specifies the current matrix
+	glLoadIdentity();//replaces current matrix with identity matrix
+	gluOrtho2D(0.0,999.0,0.0,799.0);//defines 2d orthografic projection matrix
 }
 
-
-void display(void)
+//glut main func
+int main(int argc, char* argv[])
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-     if(flag==0)
-      display1();
-
-	else if(flag==1)
-		display2();
-}
-
-int main(int argc,char ** argv)
-{
-	glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
-	glutInitWindowSize(1024,768);
-	glutInitWindowPosition(0,0);
-	glutCreateWindow("Ship and Iceberg Collision");
-	glutKeyboardFunc(myKeyboardFunc);
-	glutMouseFunc(myMouse1);
-	init();
-	glutSwapBuffers();
-	glutDisplayFunc(display);
-	glEnable(GL_SMOOTH);
-	init();
-	glutMainLoop();
-return 0;
+	glutInit(&argc, argv);//initalize glut library
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);//sets the initial display mode
+	glutInitWindowSize(1366.0,768.0);//sets initial window size
+	glutInitWindowPosition(0,0);//sets initial window position
+	glutCreateWindow("The Sinking ship using OpenGL");//create a top level window
+	glutDisplayFunc(display);//sets display callback for current window
+	myinit();
+	glutTimerFunc(100,update,0);//sets timer callback
+	glutMainLoop();//enters glut event processing loop
+	return 0;
 }
