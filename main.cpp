@@ -10,12 +10,20 @@ void water();
 
 GLint a=0,b=0,c=0,d=0,e=0,f=0,g=500,h=600,x=100,i=0;
 GLfloat theta=0.0;
+GLint speed=300;
+
+void mykeyboard(unsigned char key,int x,int y)
+{
+if(key=='s') speed=speed+10;
+if(key=='f' && speed>20) speed=speed-10;
+if(key=='e') exit(0);
+}
 
 void update(int value)
 {
 	a+=20.0;
 	glutPostRedisplay();
-	glutTimerFunc(300,update,0);
+	glutTimerFunc(speed,update,0);
 }
 
 void display()
@@ -30,7 +38,7 @@ void display()
 		b+=20;
 		display2();
 	}
-	if(b>950 )
+	if(b>500 )
 	{
 		c+=10;
 		display3();
@@ -55,7 +63,10 @@ void display2()
 {
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	//ice();
+	glPushMatrix();
+	glTranslated(500,0,0);
+	ice();
+	glPopMatrix();
 	glPushMatrix();
 	glTranslated(b,75,0.0);
 	ship();
@@ -458,7 +469,8 @@ int main(int argc, char* argv[])
 	glutCreateWindow("The Sinking ship using OpenGL");//create a top level window
 	glutDisplayFunc(display);//sets display callback for current window
 	myinit();
-	glutTimerFunc(100,update,0);//sets timer callback
+	glutKeyboardFunc(mykeyboard);
+	glutTimerFunc(500,update,0);//sets timer callback
 	glutMainLoop();//enters glut event processing loop
 	return 0;
 }
