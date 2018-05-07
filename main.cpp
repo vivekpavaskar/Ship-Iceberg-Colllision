@@ -10,15 +10,15 @@ void water();
 
 GLint a=0,b=0,c=0,d=0,e=0,f=0,g=500,h=600,x=100,i=0;
 GLfloat theta=0.0;
-GLint speed=300,pa=20,pb=20,pc=20;
+GLint speed=300,pa=20,pb=20,pc=20,px=5;
 
 void mykeyboard(unsigned char key,int x,int y)
 {
-    if(key=='s')
+    if(key=='s' || key=='S')
         speed=speed+10;
-    if(key=='f' && speed>20)
+    if(key=='f' || key=='F' && speed>20)
         speed=speed-10;
-    if(key=='e')
+    if(key=='e' || key=='E')
         exit(0);
 }
 
@@ -29,12 +29,14 @@ void mymouse(int btn,int state,int x,int y)
         pa=0;
         pb=0;
         pc=0;
+        px=0;
     }
     if(btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN)
     {
-       pa=20;
+        pa=20;
         pb=20;
         pc=20;
+        px=5;
     }
 
 }
@@ -50,21 +52,21 @@ void display()
 {
 
     glClear(GL_COLOR_BUFFER_BIT);
- display1();
-        if(a>950)
-        {
-            b+=pb;
-            display2();
-        }
-        if(b>500 )
-        {
-            c+=pc;
-            display3();
-
-        }
-
-        glFlush();
+    display1();
+    if(a>950)
+    {
+        b+=pb;
+        display2();
     }
+    if(b>500 )
+    {
+        c+=pc;
+        display3();
+
+    }
+
+    glFlush();
+}
 
 
 void display1()
@@ -96,7 +98,7 @@ void display3()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     ice();
-    x-=5;
+    x-=px;
     glPushMatrix();
     glTranslated(c,x,0.0);
     glRotated(-12,0,0,1);
